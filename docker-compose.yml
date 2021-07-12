@@ -1,0 +1,52 @@
+version: '3.2'
+services:
+    nginx:
+        image: nginx:latest
+        ports:
+          - "8000:80"
+        volumes:
+          - ./hosts:/etc/nginx/conf.d
+          - ./www:/var/www
+          - ./logs:/var/log/nginx
+    prometheus:
+        image: prom/prometheus:latest
+        volumes:
+            - ./images/prometheus:/etc/prometheus/
+            - ./data:/prometheus/data
+        command:
+            - --config.file=/etc/prometheus/prometheus.yml
+        ports:
+            - 9090:9090
+        restart: always
+    node-exporter:
+        image: prom/node-exporter
+        volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /:/rootfs:ro
+        command:
+            - --path.procfs=/host/proc
+            - --path.sysfs=/host/sys
+            - --collector.filesystem.ignored-mount-points
+            - ^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)
+        ports:
+            - 9100:9100
+    grafana:
+        image: grafana/grafana:6.7.2
+        container_name: grafana
+        volumes:
+            - ./gfdata:/var/lib/grafana
+        environment:
+            - GF_SECURITY_ADMIN_USER=alex
+            - GF_SECURITY_ADMIN_PASSWORD=123
+            - GF_USERS_ALLOW_SIGN_UP=false
+        restart: unless-stopped
+        ports:
+            - 3000:3000
+        user: "0"
+    myApp:
+        build: ./app
+        image: my-new-app
+        container_name: 'my-app'
+        ports:
+            - 5000:5000

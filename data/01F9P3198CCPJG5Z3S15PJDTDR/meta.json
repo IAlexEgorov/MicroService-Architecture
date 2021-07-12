@@ -1,0 +1,17 @@
+{
+	"ulid": "01F9P3198CCPJG5Z3S15PJDTDR",
+	"minTime": 1625245414999,
+	"maxTime": 1625248800000,
+	"stats": {
+		"numSamples": 183141,
+		"numSeries": 1381,
+		"numChunks": 1381
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01F9P3198CCPJG5Z3S15PJDTDR"
+		]
+	},
+	"version": 1
+}
