@@ -1,5 +1,6 @@
 version: '3.2'
 services:
+
     nginx:
         image: nginx:latest
         ports:
@@ -8,6 +9,8 @@ services:
           - ./hosts:/etc/nginx/conf.d
           - ./www:/var/www
           - ./logs:/var/log/nginx
+        restart: unless-stopped
+
     prometheus:
         image: prom/prometheus:latest
         volumes:
@@ -17,7 +20,8 @@ services:
             - --config.file=/etc/prometheus/prometheus.yml
         ports:
             - 9090:9090
-        restart: always
+        restart: unless-stopped
+
     node-exporter:
         image: prom/node-exporter
         volumes:
@@ -31,6 +35,8 @@ services:
             - ^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)
         ports:
             - 9100:9100
+        restart: unless-stopped
+    
     grafana:
         image: grafana/grafana:6.7.2
         container_name: grafana
@@ -44,9 +50,12 @@ services:
         ports:
             - 3000:3000
         user: "0"
+        restart: unless-stopped
+    
     myApp:
         build: ./app
         image: my-new-app
         container_name: 'my-app'
         ports:
             - 5000:5000
+        restart: unless-stopped
