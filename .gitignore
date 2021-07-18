@@ -1,5 +1,1 @@
-logs
-
-*.log
-
-data
+data/*.log

@@ -59,3 +59,13 @@ services:
         ports:
             - 5000:5000
         restart: unless-stopped
+
+    alertmanager:
+        image: prom/alertmanager
+        privileged: true
+        volumes:
+            - ./alertmanager/alertmanager.yml:/alertmanager.yml
+        command:
+            - --config.file=/alertmanager.yml
+        ports:
+            - '9093:9093'
