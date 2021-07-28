@@ -3,6 +3,7 @@ services:
 
     nginx:
         image: nginx:latest
+        container_name: nginx
         ports:
           - "8000:80"
         volumes:
@@ -13,6 +14,7 @@ services:
 
     prometheus:
         image: prom/prometheus:latest
+        container_name: prometheus
         volumes:
             - ./images/prometheus:/etc/prometheus/
             - ./data:/prometheus/data
@@ -24,6 +26,7 @@ services:
 
     node-exporter:
         image: prom/node-exporter
+        container_name: node-exporter
         volumes:
             - /proc:/host/proc:ro
             - /sys:/host/sys:ro
@@ -52,16 +55,16 @@ services:
         user: "0"
         restart: unless-stopped
     
-    myApp:
+    my-app:
         build: ./app
-        image: my-new-app
-        container_name: 'my-app'
+        container_name: flask-app
         ports:
             - 5000:5000
         restart: unless-stopped
 
     alertmanager:
         image: prom/alertmanager
+        container_name: alertmanager
         privileged: true
         volumes:
             - ./alertmanager/alertmanager.yml:/alertmanager.yml
