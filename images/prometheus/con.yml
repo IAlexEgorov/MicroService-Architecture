@@ -2,7 +2,7 @@ groups:
 - name: ExporterDown
   rules:
   - alert: NodeDown
-    expr: up{job='Node'} == 0
+    expr: up{job='node_exporter'} == 0
     for: 1m
     labels:
       severity: Error
