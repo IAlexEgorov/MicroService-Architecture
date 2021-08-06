@@ -72,3 +72,17 @@ services:
             - --config.file=/alertmanager.yml
         ports:
             - '9093:9093'
+    db:
+        image: postgres
+        restart: always
+        container_name: postgres
+        environment:
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=123
+
+    adminer:
+        image: adminer
+        container_name: adminer
+        restart: always
+        ports:
+            - 8080:8080
