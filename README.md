@@ -10,4 +10,5 @@ And run docker-compose file:
     docker-compose up -d 
 
 If prometheus container give an error with permissions, you will have to add chmod on "data" folder:
+
     chmod 777 -R ./data
