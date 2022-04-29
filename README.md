@@ -2,7 +2,7 @@
 This is basic set of web applications with simple monitoring
 For running you must pull repositiory:
 
-    git pull https://github.com/sasha-egorov-01/MicroService-Architecture.git
+    git clone https://github.com/sasha-egorov-01/MicroService-Architecture.git
 
 And run docker-compose file:
 
